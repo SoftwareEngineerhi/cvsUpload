@@ -62,7 +62,7 @@ module.exports.view = async function(req, res) {
 
     } catch (error) {
         console.log('Error in fileController/view', error);
-        res.status(500).send('Internal server error');
+        res.status(500).send('Internal server error'+ error.message));
     }
 }
 
