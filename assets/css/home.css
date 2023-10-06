@@ -54,7 +54,10 @@
    animation: borderstyle 2s linear infinite alternate;
 }
 
-
+.view{
+    width:30px;
+    height:30px;
+}
 .list-center-text {
     color:  #f8f8f8;
     font-family: Franklin Gothic;
