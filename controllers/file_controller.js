@@ -24,7 +24,7 @@ module.exports.upload = async function(req, res) {
         return res.redirect('/');
     } catch (error) {
         console.log('Error in fileController/upload', error);
-        res.status(500).send('Internal server error'+ error.message);
+        res.status(500).send('Internal upload server error'+ error.message);
     }
    
 }
@@ -62,7 +62,7 @@ module.exports.view = async function(req, res) {
 
     } catch (error) {
         console.log('Error in fileController/view', error);
-        res.status(500).send('Internal server error'+ error.message);
+        res.status(500).send('Internal view server error'+ error.message);
     }
 }
 
