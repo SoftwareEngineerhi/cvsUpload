@@ -1,0 +1,132 @@
+<!-- local css for body -->
+<link rel="stylesheet" type="text/css" href="../css/home.css">
+<!-- local css for header -->
+<link rel="stylesheet" type="text/css" href="../css/header.css">
+
+
+<!-- header -->
+<div class="nav-bar">
+   <div class="title">
+       <img src="https://cdn-icons-png.flaticon.com/128/1091/1091223.png" class="logo"/>  
+      CSV Upload
+    </div>
+</div>
+
+<!-- upload -->
+<div class="container">
+    <!-- main text -->
+    <div class="center-text">
+        <h1>Upload a File Here</h1>
+        <p>Reads CSV file and displays its content in tabular form</p>
+    </div>
+
+    <!-- upload box -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="input-container">
+            <input type="file" id="csvFile" name="file" accept=".csv">
+            <button class="upload-btn">Upload</button>
+        </div>
+    </form>
+</div>
+
+<!-- show uploaded files -->
+<div class="files-list" style="margin-bottom: 50px;">  
+    <div class="list-center-text">
+        <h2>Uploaded files</h2>
+    </div>
+<!-- Add this input field for searching -->
+<div class="search-sort-container">
+    <!-- Add this input field for searching -->
+    <div class="search-container">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" id="fileSearch" placeholder="Search for file name...">
+    </div>
+    <!-- Add ascending and descending sorting buttons -->
+    <div class="sorting-buttons">
+        <button id="sortAscending">Sort Ascending</button>
+        <button id="sortDescending">Sort Descending</button>
+    </div>
+</div>
+
+    <% if(files.length==0) { %>
+        <div class="no-file">No files to show!</div>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Time (UTC)</th>
+                <th>View</th>
+                <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let file of files) { %>
+                <tr>
+                    <td><%= file.fileName %></td>
+                    <td><%= file.createdAt.toLocaleDateString() %></td>
+                    <td><%= file.createdAt.toLocaleTimeString() %></td>
+                    <td><a href="/view/<%= file.file %>" class="view-link"><img src="https://cdn-icons-png.flaticon.com/128/1666/1666578.png" class="logo></a></td>
+                    <td><a href="/delete/<%= file.file %>" class="delete-link"><i class="fa-regular fa-trash-can " style="color: #f00;"></i></a></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    <% } %>
+</div>
+<script>
+    const fileSearchInput = document.getElementById('fileSearch');
+    const fileRows = document.querySelectorAll('.files-list table tbody tr');
+    const sortAscendingButton = document.getElementById('sortAscending');
+    const sortDescendingButton = document.getElementById('sortDescending');
+
+    sortAscendingButton.addEventListener('click', function () {
+        const sortedRows = Array.from(fileRows).sort((a, b) => {
+            const fileNameA = a.querySelector('td:first-child').textContent.toLowerCase();
+            const fileNameB = b.querySelector('td:first-child').textContent.toLowerCase();
+            return fileNameA.localeCompare(fileNameB);
+        });
+
+        fileRows.forEach((row) => {
+            row.remove();
+        });
+
+        sortedRows.forEach((row) => {
+            document.querySelector('.files-list table tbody').appendChild(row);
+        });
+    });
+
+    sortDescendingButton.addEventListener('click', function () {
+        const sortedRows = Array.from(fileRows).sort((a, b) => {
+            const fileNameA = a.querySelector('td:first-child').textContent.toLowerCase();
+            const fileNameB = b.querySelector('td:first-child').textContent.toLowerCase();
+            return fileNameB.localeCompare(fileNameA);
+        });
+
+        fileRows.forEach((row) => {
+            row.remove();
+        });
+
+        sortedRows.forEach((row) => {
+            document.querySelector('.files-list table tbody').appendChild(row);
+        });
+    });
+
+    fileSearchInput.addEventListener('input', function () {
+        const searchTerm = fileSearchInput.value.toLowerCase();
+
+        for (const row of fileRows) {
+            const fileNameCell = row.querySelector('td:first-child');
+            const fileName = fileNameCell.textContent.toLowerCase();
+
+            if (fileName.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+
+
+</script>
