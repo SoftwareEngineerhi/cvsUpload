@@ -7,9 +7,11 @@ const mongoose = require("mongoose");
 // mongoose.connect('mongodb://127.0.0.1:27017/csvUploads');
 const DB = 'mongodb+srv://webapp:webapp123@cluster0.vfagkr7.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(DB).then(()=>{
-    console.log('Connection successful!');
-}).catch((err) => console.log("no connection " + err));
+mongoose.connect(DB, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
+
 
 //setting it to db
 const db = mongoose.connection;
