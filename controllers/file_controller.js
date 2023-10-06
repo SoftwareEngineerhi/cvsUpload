@@ -24,8 +24,9 @@ module.exports.upload = async function(req, res) {
         return res.redirect('/');
     } catch (error) {
         console.log('Error in fileController/upload', error);
-        res.status(500).send('Internal server error');
+        res.status(500).send('Internal server error'+ error.message);
     }
+   
 }
 
 /** ------------------ EXPORTING FUNCTION To open file viewer page ------------------ **/
