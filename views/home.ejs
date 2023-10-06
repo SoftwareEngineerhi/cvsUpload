@@ -65,7 +65,7 @@
                 <% for(let file of files) { %>
                 <tr>
                     <td><%= file.fileName %></td>
-                    <td><%= file.createdAt.toLocaleDateString() %></td>
+                   
                     <td><%= file.createdAt.toLocaleTimeString() %></td>
                     <td><a href="/view/<%= file.file %>" class="view-link"><img src="https://cdn-icons-png.flaticon.com/128/1666/1666578.png" class="view"></a></td>
                     <td><a href="/delete/<%= file.file %>" class="delete-link"><i class="fa-regular fa-trash-can " style="color: #f00;"></i></a></td>
